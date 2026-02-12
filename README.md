@@ -27,5 +27,11 @@ O objetivo principal é reforçar os fundamentos da programação em C, trabalha
 
 ---
 
+## Versão 2
+- Leitura segura de números (evita erro ao digitar letras)
+- Alocação dinâmica de memória com realloc
+- Sistema de busca de produto por ID
+
+
 Desenvolvido por
 Guilherme Quadros Das Chagas
