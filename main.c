@@ -11,9 +11,11 @@ struct produto
     float preco;
 };
 
-int i;
 int q_produto = 0;
 int escolha_menu_1 = 0;
+int posicao;
+
+
 
 int leitura_segura(){
     char buffer[20];
@@ -44,12 +46,36 @@ float leitura_float_segura(){
     }
 }
 
+int pesquisador(struct produto *lista,int tipo, int q_produtos){
+    int idpesquisa = 0;
+    switch (tipo)
+    {
+    case 1:
+        printf("digite o id");
+        idpesquisa = leitura_segura();
+        for (int i = 0; i < q_produtos; i++)
+                    {
+                            if (lista[i].ID == idpesquisa)
+                            {
+                                int j = i;
+                                return j;
+                            }
+                    }
+            return -1;
+        
+                break;
+    default:
+    return -2;
+        break;
+    }
+    
+}
 
 int main(){
     setlocale(LC_ALL, "Portuguese");// Arruma acentuação e pontuação
     struct produto *ptrproduto = NULL; // cria um ponteiro para o struct e o define como nulo
-    while (escolha_menu_1!=3)
-    {printf("\nolá! \nescolha uma das opções abaixo \n1. cadastrar produto \n2. listar produtos \n3. sair\n");
+    while (escolha_menu_1!=4)
+    {printf("\nolá! \nescolha uma das opções abaixo \n1. cadastrar produto \n2. listar produtos \n3.Buscar Produtos \n4. sair \n");
         escolha_menu_1 = leitura_segura();
         
                 if (escolha_menu_1 == 1){
@@ -89,7 +115,7 @@ int main(){
 
                 else if (escolha_menu_1 == 2){
                     if(q_produto > 0){
-                        for (i = 0; i < q_produto; i++)
+                        for (int i = 0; i < q_produto; i++)
                         {
                             printf("---produto %d---",i+1 );
                             printf("\nnome: ");
@@ -106,7 +132,41 @@ int main(){
                     }
                     
                 }
-                else if (escolha_menu_1 != 3){
+
+                else if(escolha_menu_1 == 3){
+                    if (q_produto>0)
+                    {
+                        posicao = pesquisador(ptrproduto,1,q_produto);
+                        if (posicao>=0)
+                        {
+                            
+                        
+                        
+                            printf("\nnome: ");
+                            printf("%s",ptrproduto[posicao].nome);
+                            printf("\nID: ");
+                            printf("%d",ptrproduto[posicao].ID);
+                            printf("\nQuantidade ");
+                            printf("%d",ptrproduto[posicao].quantidade);
+                            printf("\npreço: ");
+                            printf("R$%.2f\n\n",ptrproduto[posicao].preco);
+                        }
+                        else if (posicao == -1){
+                            printf("Produto não encontrado.");
+                        }
+                        else if(posicao == -2){
+                            printf("erro fatal");
+                            exit(1);
+                        }
+
+                    }
+                    else{
+                        printf("\nnenhum produto cadastrado\n\n");
+                    }
+                    
+                }
+
+                else if (escolha_menu_1 != 4){
                     printf("opcao invalida!\n");
                     }
 
@@ -115,6 +175,7 @@ int main(){
 
         
     }
+
     free(ptrproduto);
 }
 
